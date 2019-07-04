@@ -19,15 +19,15 @@ class StreamListener(tweepy.StreamListener):
             text = status.text
             id_str = status.id_str
             created = (status.created_at + IST).strftime("%d-%b-%Y (%H:%M:%S)")
+            tweets_count = len(tweets_list2)
             print(tweets_count)
             try: 
                 tweets_list2.append(status.extended_tweet['full_text'])
-                df.loc[len(tweets_list2) - 1] = [created, id_str, text]
+                df.loc[tweets_count - 1] = [created, id_str, text]
 
             except:
-                print("not success")
                 tweets_list2.append(text)
-                df.loc[len(tweets_list2) - 1] = [created, id_str, text]
+                df.loc[tweets_count - 1] = [created, id_str, text]
 
     def on_error(self, status_code):
         if status_code == 420:
